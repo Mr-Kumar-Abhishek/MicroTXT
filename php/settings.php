@@ -2,7 +2,7 @@
 session_start();
 
 /* BEGIN USER SET VARIABLES */
-$siteTitle = 'My MicroTxt Instance';
+$siteTitle = 'My MicroTXT Instance';
 $motd = false;
 
 $captcha = true;
