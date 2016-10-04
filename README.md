@@ -21,7 +21,7 @@ Simply download and place the files in your PHP 5+ enabled website directory, an
 
 Just edit php/settings.php
 
-To disable the captcha just change $captcha to false, or to make the captcha appear every time, change $postsBeforeCaptcha to true.
+To disable the captcha just change $captcha to false, or to make the captcha appear every time, change $postsBeforeCaptcha to 0.
 
 ## Warnings
 
