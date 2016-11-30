@@ -1,4 +1,10 @@
 <?php
+/*
+MicroTXT - A tiny PHP Textboard Software
+Copyright (c) 2016 Kevin Froman (https://ChaosWebs.net/)
+
+MIT License
+*/
 include('php/settings.php');
 include('php/csrf.php');
 ?>
@@ -16,16 +22,16 @@ include('php/csrf.php');
 
 	<div id='postList'>
 		Threads:<br><br>
-		<?php 
+		<?php
 		// List current threads
-		$files = glob('posts/*.html'); 
+		$files = glob('posts/*.html');
 		foreach ($files as $file => $fileDisplay) {
 			$fileDisplay = str_replace('.html', '', $fileDisplay);
 			$fileDisplay = str_replace('posts/', '', $fileDisplay);
 			$pos = strrpos($fileDisplay, '-');
 			echo '<a href="view.php?post=' . $fileDisplay . '">' . substr($fileDisplay, 0, $pos) . '</a>';
 			echo '<br>';
-		} 
+		}
 		?>
 	</div>
 	<?php
@@ -66,6 +72,6 @@ include('php/csrf.php');
 			<p><a href='faq.txt'>FAQ</a></p>
 		</form>
 	</div>
-	
+
 </body>
 </html>

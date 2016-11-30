@@ -1,4 +1,10 @@
 <?php
+/*
+MicroTXT - A tiny PHP Textboard Software
+Copyright (c) 2016 Kevin Froman (https://ChaosWebs.net/)
+
+MIT License
+*/
 include('php/settings.php');
 include('php/csrf.php');
 
@@ -20,7 +26,7 @@ function redirectError()
 {
 	setcookie('microtxterror', 'true', time()+3600);
 	header('location: index.php');
-	die(0);	
+	die(0);
 }
 
 if (! isset($_POST['text']) || ! isset($_POST['CSRF']) || ! isset($_POST['name']) || ! isset($_POST['threadID']) || ! isset($_POST['replyTo']) || ! isset($_POST['tripcode']))

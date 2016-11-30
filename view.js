@@ -1,6 +1,12 @@
+/*
+MicroTXT - A tiny PHP Textboard Software
+Copyright (c) 2016 Kevin Froman (https://ChaosWebs.net/)
+
+MIT License
+*/
 function replyTitle()
 {
-	document.getElementById('replyTitle').scrollIntoView(); 
+	document.getElementById('replyTitle').scrollIntoView();
 }
 	document.getElementById('replyTo').value = document.getElementById('OP').innerHTML;
 

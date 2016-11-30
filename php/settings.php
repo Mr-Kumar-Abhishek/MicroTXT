@@ -1,4 +1,10 @@
-<?php 
+<?php
+/*
+MicroTXT - A tiny PHP Textboard Software
+Copyright (c) 2016 Kevin Froman (https://ChaosWebs.net/)
+
+MIT License
+*/
 session_start();
 
 /* BEGIN USER SET VARIABLES */
