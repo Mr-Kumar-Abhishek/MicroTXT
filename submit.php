@@ -26,7 +26,7 @@ function tripcode($tripcode)
 // Redirect if some BS is going on
 function redirectError()
 {
-	setcookie('microtxterror', 'true', time()+3600);
+	$_SESSION['mtPostError'] = true;
 	header('location: index.php');
 	die(0);
 }

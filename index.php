@@ -39,6 +39,12 @@ include('php/csrf.php');
 	{
 		echo '<div class="motd">' . file_get_contents('motd.txt') . '</div>';
 	}
+	if (isset($_SESSION['mtPostError'])){
+		if ($_SESSION['mtPostError']){
+			echo '<div style="color: red; text-align: center; margin-bottom: 1em;">There was an error publishing your post!</div>';
+			$_SESSION['mtPostError'] = false;
+		}
+	}
 	?>
 	<div class='postForm'>
 		<form method='post' action='submit.php'>
