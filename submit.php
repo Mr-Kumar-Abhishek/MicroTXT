@@ -81,6 +81,17 @@ if (strlen($_POST['text']) > 100000 || strlen($_POST['title'] > 20) || strlen($_
 // html encode user data to prevent xss
 $text = htmlentities($text);
 $text = $Parsedown->text($text);
+
+$title = str_replace('/', '', $title);
+$title = str_replace('\\', '', $title);
+$title = str_replace('#', '', $title);
+$title = str_replace('&', '', $title);
+$title = str_replace('.', '', $title);
+
+if ($title == ''){
+	redirectError();
+}
+
 $title = htmlentities($title);
 $name = htmlentities($name);
 $tripcode = htmlentities($tripcode);
@@ -93,9 +104,6 @@ $newCount = "$newCount";
 file_put_contents('threadCount.txt', $newCount, LOCK_EX);
 
 // Make the new post file
-$title = str_replace('/', '', $title);
-$title = str_replace('\\', '', $title);
-$title = str_replace('#', '', $title);
 $title = rtrim(ltrim($title));
 
 if (! $allowHidden)
