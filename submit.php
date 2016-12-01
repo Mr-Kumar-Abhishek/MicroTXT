@@ -116,6 +116,10 @@ if (! $allowHidden)
 	$title = ltrim($title, '.');
 }
 
+if (!file_exists('posts/')) {
+    mkdir('posts/');
+}
+
 $postFile = 'posts/' . $title . ' - ' . $newCount . '.html';
 
 $postID = time();
