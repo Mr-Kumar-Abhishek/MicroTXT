@@ -1,6 +1,6 @@
 # MicroTXT 💻
 
-A tiny ![textboard style](https://en.wikipedia.org/wiki/Textboard) software written in PHP, no database required.
+A tiny [textboard style](https://en.wikipedia.org/wiki/Textboard) software written in PHP, no database required.
 
 It is meant to be simple to use and host.
 
