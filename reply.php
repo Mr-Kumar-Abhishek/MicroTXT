@@ -87,7 +87,6 @@ $name = $_POST['name'];
 $tripcode = $_POST['tripcode'];
 
 // html encode user data to prevent xss
-
 $text = htmlentities($text);
 $name = htmlentities($name);
 $tripcode = htmlentities($tripcode);
@@ -153,7 +152,7 @@ $parent->appendChild( $child);
 
 // Write html to thread file
 
-file_put_contents($threadFile, $doc->saveHTML());
+file_put_contents($threadFile, nl2br($doc->saveHTML(), $false));
 
 // If captcha is to be used, increment the user session post count
 if ($captcha)
