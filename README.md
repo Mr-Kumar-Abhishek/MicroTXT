@@ -43,4 +43,4 @@ If you want to support development, a dollar or two would be appreciated.
 
 Bitcoin: 3GKzFQyfE35U6Gi9XeN3xGQ3tMZy3x2ByQ
 
-[Or, donate another way](https://chaoswebs.net/?page=donate)
+[Or, donate another way](https://chaoswebs.net/donate)
