@@ -2,7 +2,7 @@
 
 A tiny [textboard style](https://en.wikipedia.org/wiki/Textboard) software written in PHP, no database required.
 
-It is meant to be simple to use and host.
+It is meant to be simple to use, host, and develop.
 
 ## Features
 
@@ -30,12 +30,40 @@ To disable the captcha just change $captcha to false, or to make the captcha app
 ## Warnings
 
 This is new, there may be some issues with it.
+
 Don't rely on it for huge communities, it doesn't scale for very high traffic projects (it's not meant to).
+
 Change the salt in settings.php, otherwise tripcodes may be easier to brute force.
 
 ## Demo
 
 You can use the demo board [on my website](https://chaoswebs.net/mt/).
+
+## Contributing
+
+I will accept pull requests if they fix bugs or improve the software in a way I think fits the goals of the project.
+
+### Bug Reports
+
+Well structured & polite bug reports are appreciated. Please try to include the following information in any bug reports:
+
+* PHP version
+* Web server version
+* Operating system version
+* MicroTXT Version (specified in settings.php)
+* What you have tried so far
+* Screenshots are helpful, but not necessarily required.
+
+## Development Roadmap & Planned features
+
+* Better post & reply formatting
+* Admin panel for setup, configuration, and moderation
+* Easy to use installation script (For Linux)
+* Perhaps a Docker container if there is demand
+
+## Contacting me
+
+You can get in touch with me [here](https://chaoswebs.net/contact)
 
 ## Donate 💲
 

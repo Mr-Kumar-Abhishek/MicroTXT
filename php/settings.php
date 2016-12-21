@@ -7,7 +7,10 @@ MIT License
 */
 session_start();
 
-/* BEGIN USER SET VARIABLES */
+$mtVersion = '0.1';
+
+/* BEGIN USER SET VARIABLES, MODIFING THIS PART IS SUPPORTED */
+
 $siteTitle = 'My MicroTXT Instance';
 $motd = false;
 
