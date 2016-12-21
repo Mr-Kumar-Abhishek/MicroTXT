@@ -100,7 +100,9 @@ if (strlen($_POST['text']) > 100000 || strlen($_POST['name'] > 20) || strlen($_P
 $postID = time();
 
 $doc = new DOMDocument;
-$doc->loadHtmlFile($threadFile);
+
+$doc->loadHTML(mb_convert_encoding(file_get_contents($threadFile), 'HTML-ENTITIES', 'UTF-8'));
+
 $parent = $doc->getElementById($replyTo);
 
 if ($parent == null)
