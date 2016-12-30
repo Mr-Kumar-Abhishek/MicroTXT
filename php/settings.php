@@ -7,7 +7,7 @@ MIT License
 */
 session_start();
 
-$mtVersion = '0.2';
+$mtVersion = '0.3';
 
 /* BEGIN USER SET VARIABLES, MODIFING THIS PART IS SUPPORTED */
 

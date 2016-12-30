@@ -35,6 +35,7 @@ MIT License
 	margin-left: 15%;
 	margin-right: 15%;
 	margin-bottom: 2em;
+	word-wrap: break-word;
 }
 
 .name
