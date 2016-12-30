@@ -70,7 +70,7 @@ if ($replyTo == '')
 	redirectError();
 }
 
-$threadID = $_POST['threadID'];
+$threadID = str_replace('\\', '', str_replace('/', '', $_POST['threadID']));
 
 $threadFile = 'posts/' . $threadID . '.html';
 
