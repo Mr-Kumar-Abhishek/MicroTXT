@@ -6,7 +6,7 @@ It is meant to be simple to use, host, and develop.
 
 ## Features
 
-* ✅ Only PHP 5.x+ required (No database!)
+* ✅ Only PHP 5.x+ required (No database server, only sqlite3!)
 * ✅ Hidden/unlisted threads (start your thread title with .)
 * ✅ MOTDs
 * ✅ Less than 300kb uncompressed
@@ -20,6 +20,7 @@ MicroTXT is only tested in a Linux environment, however, it should work on Windo
 Simply download and place the files in your PHP 5+ enabled website directory, and edit php/settings.php to your liking. You should probably also change rules.txt and faq.txt too.
 
 **You also need the GD PHP library installed on your PHP instance if you want to use the included captcha**
+**You also need Sqlite3 installed!**
 
 ## Configuring
 
