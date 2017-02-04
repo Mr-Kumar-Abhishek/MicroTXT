@@ -17,11 +17,13 @@ $motd = false;
 $captcha = true;
 $postsBeforeCaptcha = 3;
 
-$reporting = false;
+$reporting = true;
 
 $allowHidden = true; // If you change this to false and there are already hidden posts, they won't be deleted
 
 $salt = 'DEFAULT SALT'; // IT IS VERY IMPORTANT FOR YOU TO UPDATE THIS TO SOMETHING LONG AND RANDOM
+
+$threadListLimit = 10;
 
 /* END USER SET VARIABLES */
 

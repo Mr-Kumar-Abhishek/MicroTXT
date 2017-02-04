@@ -22,21 +22,22 @@ function tripcode($tripcode)
 
 
 // Redirect if some BS is going on
-function redirectError()
+function redirectError($msg)
 {
-	setcookie('microtxterror', 'true', time()+3600);
+	$_SESSION['mtPostError'] = true;
+	$_SESSION['mtPostErrorTxt'] = $msg;
 	header('location: index.php');
 	die(0);
 }
 
 if (! isset($_POST['text']) || ! isset($_POST['CSRF']) || ! isset($_POST['name']) || ! isset($_POST['threadID']) || ! isset($_POST['replyTo']) || ! isset($_POST['tripcode']))
 {
-	redirectError();
+	redirectError('Missing argument');
 }
 
 if ($_POST['CSRF'] != $_SESSION['CSRF'])
 {
-	redirectError();
+	redirectError('Invalid CSRF token');
 }
 
 
@@ -50,11 +51,11 @@ if ($captcha)
 	{
 		if (! isset($_POST['captcha']))
 		{
-			redirectError();
+			redirectError('Invalid captcha');
 		}
 		if ($_POST['captcha'] != $_SESSION['captchaVal'])
 		{
-			redirectError();
+			redirectError('Invalid captcha');
 		}
 		else
 		{
@@ -67,7 +68,7 @@ $replyTo = $_POST['replyTo'];
 
 if ($replyTo == '')
 {
-	redirectError();
+	redirectError('No reply ID set');
 }
 
 $threadID = str_replace('\\', '', str_replace('/', '', $_POST['threadID']));
@@ -92,7 +93,7 @@ $name = htmlentities($name);
 $tripcode = htmlentities($tripcode);
 if (strlen($_POST['text']) > 100000 || strlen($_POST['name'] > 20) || strlen($_POST['tripcode']) > 100)
 {
-	redirectError();
+	redirectError('Text, name, or tripcode is too long.');
 }
 
 

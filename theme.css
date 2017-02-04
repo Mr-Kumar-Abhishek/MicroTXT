@@ -9,7 +9,7 @@ MIT License
 	text-align: center;
 }
 
-.logo, .submitPostButton
+.logo, .submitPostButton, #postList h3
 {
 	font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
 }
@@ -121,6 +121,8 @@ MIT License
 	margin-top: 2em;
 	border: 1px solid black;
 	padding: 1em;
+	overflow-y: scroll;
+	border-radius: 3px;
 }
 
 .submitPostButton
@@ -161,4 +163,18 @@ img
 	  max-height: 250px;
 	  max-width: 250px;
 	}
+}
+
+.tabButton{
+	margin-top: 2em;
+}
+
+.threadLink{
+	margin-top: -10px;
+	margin-right: 2em;
+
+}
+
+.authors{
+	margin-left: 5em;
 }

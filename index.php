@@ -7,6 +7,7 @@ MIT License
 */
 include('php/settings.php');
 include('php/csrf.php');
+include('php/sqlite.php');
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -21,27 +22,81 @@ include('php/csrf.php');
 	<h1 class='center logo'><?php echo $siteTitle;?></h1>
 
 	<div id='postList'>
-		Threads:<br><br>
+		<h3>Threads:</h3><br>
+		<table>
 		<?php
-		// List current threads
-		$files = glob('posts/*.html');
-		foreach ($files as $file => $fileDisplay) {
-			$fileDisplay = str_replace('.html', '', $fileDisplay);
-			$fileDisplay = str_replace('posts/', '', $fileDisplay);
-			$pos = strrpos($fileDisplay, '-');
-			echo '<a href="view.php?post=' . $fileDisplay . '">' . substr($fileDisplay, 0, $pos) . '</a>';
-			echo '<br>';
+		$max = 0; // Largest thread number in database
+		$threadDisplayCount = 1;
+		$countReached = false;
+		if (! isset($_GET['range'])){
+			$requestRange = 1;
 		}
+		else{
+			$requestRange = $_GET['range'];
+		}
+		$requestRange = $db->escapeString($requestRange);
+		/*
+		if (! is_int($requestRange)){
+			$requestRange = 1;
+		}
+		*/
+
+	 $sql =<<<EOF
+		 SELECT MAX(ID) from threads;
+EOF;
+$ret = $db->query($sql);
+
+   while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
+		 $max = $row['MAX(ID)'];
+	 }
+
+	 // Get all threads within the specified range
+
+	 $sql =<<<EOF
+	   SELECT * FROM Threads where ROWID >= $requestRange;
+EOF;
+	$ret = $db->query($sql);
+	while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
+			if ($threadDisplayCount > $threadListLimit){
+				$countReached = true;
+				break;
+			}
+			$threadDisplayCount = $threadDisplayCount + 1;
+			echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '" class="threadLink">' . $row['TITLE'] . '</a></td><td>By: ' . $row['AUTHOR'] . '</td></tr>';
+	}
+	if ($countReached){
+		$requestRange = $requestRange + $threadListLimit;
+		echo '<div class="tabButton"><a href="index.php?range=' . $requestRange . '"><button>Next</button></a></div>';
+		$requestRange = $requestRange - $threadListLimit;
+		if ($requestRange < 1){
+			$requestRange = 1;
+		}
+	}
+	if ($requestRange > 1){
+		$requestRange = $requestRange - $threadListLimit;
+		if ($requestRange < 1){
+			$requestRange = 1;
+		}
+		echo '<div class="tabButton"><a href="index.php?range=' . $requestRange . '"><button>Back</button></a></div>';
+		$requestRange = $requestRange + $threadListLimit;
+	}
+
+		$db->close();
 		?>
+		</table>
 	</div>
 	<?php
+	$error = '';
 	if ($motd)
 	{
 		echo '<div class="motd">' . file_get_contents('motd.txt') . '</div>';
 	}
 	if (isset($_SESSION['mtPostError'])){
 		if ($_SESSION['mtPostError']){
-			echo '<div style="color: red; text-align: center; margin-bottom: 1em;">There was an error publishing your post!</div>';
+			if (isset($_SESSION['mtPostErrorTxt'])){
+				$error = htmlentities($_SESSION['mtPostErrorTxt']);
+			}
+			echo '<div style="color: red; text-align: center; margin-bottom: 1em;">There was an error publishing your post: ' . $error . '</div>';
 			$_SESSION['mtPostError'] = false;
 		}
 	}
@@ -52,7 +107,7 @@ include('php/csrf.php');
 			<br><br>
 			<label>Name: <input required type='text' name='name' maxlength='20' value='Anonymous'></label>
 			<br><br>
-			<label>Tripcode: <input type='password' name='tripcode' maxlength='100'></label>
+			<label>Tripcode: <input type='password' name='tripcode' maxlength='100' placeholder='optional'></label>
 			<br><br>
 			<textarea required name='text' maxlength='100000' placeholder='Text Post' cols='50' rows='10'></textarea>
 			<br><br>

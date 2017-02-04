@@ -5,9 +5,11 @@ Copyright (c) 2016 Kevin Froman (https://ChaosWebs.net/)
 
 MIT License
 */
+
 include('php/settings.php');
 include('php/csrf.php');
 include('php/Parsedown.php');
+include('php/sqlite.php');
 
 $Parsedown = new Parsedown();
 
@@ -24,21 +26,22 @@ function tripcode($tripcode)
 }
 
 // Redirect if some BS is going on
-function redirectError()
+function redirectError($msg)
 {
 	$_SESSION['mtPostError'] = true;
+	$_SESSION['mtPostErrorTxt'] = $msg;
 	header('location: index.php');
 	die(0);
 }
 
 if (! isset($_POST['text']) || ! isset($_POST['CSRF']) || ! isset($_POST['title']) || ! isset($_POST['name']) || ! isset($_POST['tripcode']))
 {
-	redirectError();
+	redirectError('Missing argument');
 }
 
 if ($_POST['CSRF'] != $_SESSION['CSRF'])
 {
-	redirectError();
+	redirectError('Invalid CSRF token');
 }
 
 
@@ -52,11 +55,11 @@ if ($captcha)
 	{
 		if (! isset($_POST['captcha']))
 		{
-			redirectError();
+			redirectError('Invalid captcha');
 		}
 		if ($_POST['captcha'] != $_SESSION['captchaVal'])
 		{
-			redirectError();
+			redirectError('Invalid captcha');
 		}
 		else
 		{
@@ -73,19 +76,24 @@ $title = $_POST['title'];
 $name = $_POST['name'];
 $tripcode = $_POST['tripcode'];
 
+$name = $db->escapeString($name);
+
 if (strlen($_POST['text']) > 100000 || strlen($_POST['title'] > 20) || strlen($_POST['name'] > 20) || strlen($_POST['tripcode'] > 100))
 {
-	redirectError();
+	redirectError('Text, title, name, or tripcode is too long.');
 }
 
 // html encode user data to prevent xss
 $text = htmlentities($text);
 $text = $Parsedown->text($text);
 
+$title = str_replace('\\', '', $title);
 $title = str_replace('/', '', $title);
 $title = str_replace('\\', '', $title);
 $title = str_replace('#', '', $title);
 $title = str_replace('&', '', $title);
+$title = str_replace('"', '', $title);
+$title = str_replace('\'', '', $title);
 
 if (strstr($title, '.')){
 	if ($title[0] != "."){
@@ -94,33 +102,46 @@ if (strstr($title, '.')){
 }
 
 if ($title == ''){
-	redirectError();
+	redirectError('Title cannot be blank');
 }
 
-$title = htmlentities($title);
+$title = htmlentities(SQLite3::escapeString($title));
+$title = rtrim(ltrim($title));
+
+if (! $allowHidden) {
+	$title = ltrim($title, '.');
+}
 $name = htmlentities($name);
 $tripcode = htmlentities($tripcode);
 
-// Create the new page file
+if (file_exists('posts/' . $title . '.html')){
+	redirectError('A post by that title already exists');
+}
 
-$currentCount = (int) file_get_contents('threadCount.txt');
-$newCount = $currentCount + 1;
-$newCount = "$newCount";
-file_put_contents('threadCount.txt', $newCount, LOCK_EX);
 
 // Make the new post file
-$title = rtrim(ltrim($title));
 
-if (! $allowHidden)
-{
-	$title = ltrim($title, '.');
-}
 
 if (!file_exists('posts/')) {
     mkdir('posts/');
 }
 
-$postFile = 'posts/' . $title . ' - ' . $newCount . '.html';
+// Insert into thread list DB
+
+$sql =<<<EOF
+	 INSERT INTO threads (title, author)
+	 VALUES ('$title', '$name');
+EOF;
+
+
+$ret = $db->exec($sql);
+if(!$ret){
+	die($db->lastErrorMsg());
+}
+$db->close();
+
+
+$postFile = 'posts/' . $title . '.html';
 
 $postID = time();
 
@@ -130,11 +151,10 @@ $compiled =  $doctype . '<div class="title">' . $title . '</div><div class="name
 
 file_put_contents($postFile, $compiled, LOCK_EX);
 
-if ($captcha)
-{
+if ($captcha) {
 	$_SESSION['currentPosts'] = $_SESSION['currentPosts'] + 1;
 }
 
-header('location: view.php?post=' . $title . ' - ' . $newCount);
+header('location: view.php?post=' . $title);
 
 ?>
