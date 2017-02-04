@@ -17,7 +17,7 @@ $motd = false;
 $captcha = true;
 $postsBeforeCaptcha = 3;
 
-$reporting = true;
+$reporting = false;
 
 $allowHidden = true; // If you change this to false and there are already hidden posts, they won't be deleted
 
