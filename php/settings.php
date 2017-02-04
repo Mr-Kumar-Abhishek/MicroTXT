@@ -7,7 +7,7 @@ MIT License
 */
 session_start();
 
-$mtVersion = '1.0';
+$mtVersion = '1.1';
 
 /* BEGIN USER SET VARIABLES, MODIFING THIS PART IS SUPPORTED */
 
@@ -24,6 +24,8 @@ $allowHidden = true; // If you change this to false and there are already hidden
 $salt = 'DEFAULT SALT'; // IT IS VERY IMPORTANT FOR YOU TO UPDATE THIS TO SOMETHING LONG AND RANDOM
 
 $threadListLimit = 10;
+
+$keepSessionAlive = true; // Change this if you want people to be able to AFK for indefinite periods of time & not recieve CSRF or captcha errors
 
 /* END USER SET VARIABLES */
 

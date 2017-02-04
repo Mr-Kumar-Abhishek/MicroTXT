@@ -85,5 +85,10 @@ $data = str_replace('</html>', '', $data);
 		<input type='submit' value='Reply'>
 	</form>
 	<script src='view.js'></script>
+	<?php
+	if ($keepSessionAlive == true){
+		echo '<iframe src="keep-alive.php" style="display: none;"></iframe>';
+	}
+	?>
 </body>
 </html>

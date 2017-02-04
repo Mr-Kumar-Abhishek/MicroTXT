@@ -34,12 +34,9 @@ include('php/sqlite.php');
 		else{
 			$requestRange = $_GET['range'];
 		}
+
 		$requestRange = $db->escapeString($requestRange);
-		/*
-		if (! is_int($requestRange)){
-			$requestRange = 1;
-		}
-		*/
+
 
 	 $sql =<<<EOF
 		 SELECT MAX(ID) from threads;
@@ -133,6 +130,10 @@ EOF;
 			<p><a href='faq.txt'>FAQ</a></p>
 		</form>
 	</div>
-
+<?php
+if ($keepSessionAlive == true){
+	echo '<iframe src="keep-alive.php" style="display: none;"></iframe>';
+}
+?>
 </body>
 </html>
