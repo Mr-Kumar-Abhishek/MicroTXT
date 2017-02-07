@@ -36,6 +36,8 @@ Don't rely on it for huge communities, it doesn't scale for very high traffic pr
 
 Change the salt in settings.php, otherwise tripcodes may be easier to brute force.
 
+**Prior to version 1.2, salts were not being applied to tripcodes, resulting in potentially easy to brute force tripcodes when bad passwords were used**
+
 ## Demo
 
 You can use the demo board [on my website](https://chaoswebs.net/mt/).
