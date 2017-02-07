@@ -94,6 +94,8 @@ $title = str_replace('#', '', $title);
 $title = str_replace('&', '', $title);
 $title = str_replace('"', '', $title);
 $title = str_replace('\'', '', $title);
+$title = str_replace('>', '', $title);
+$title = str_replace('<', '', $title);
 
 if (strstr($title, '.')){
 	if ($title[0] != "."){

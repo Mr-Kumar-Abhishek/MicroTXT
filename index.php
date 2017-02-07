@@ -23,13 +23,14 @@ include('php/sqlite.php');
 
 	<div id='postList'>
 		<h3>Threads:</h3><br>
-		<table>
+		<table><tr><th>Title</th><th>Author</th></tr>
 		<?php
 		$max = 0; // Largest thread number in database
 		$threadDisplayCount = 1;
 		$countReached = false;
+		$lastID = 1;
 		if (! isset($_GET['range'])){
-			$requestRange = 1;
+			$requestRange = 0;
 		}
 		else{
 			$requestRange = $_GET['range'];
@@ -37,11 +38,14 @@ include('php/sqlite.php');
 
 		$requestRange = $db->escapeString($requestRange);
 
-
 	 $sql =<<<EOF
 		 SELECT MAX(ID) from threads;
 EOF;
 $ret = $db->query($sql);
+
+if ($ret == false){
+	echo '<p style="color: red;">No posts!</p>';
+}
 
    while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
 		 $max = $row['MAX(ID)'];
@@ -50,37 +54,24 @@ $ret = $db->query($sql);
 	 // Get all threads within the specified range
 
 	 $sql =<<<EOF
-	   SELECT * FROM Threads where ROWID >= $requestRange;
+	   SELECT * FROM Threads ORDER BY ROWID DESC LIMIT $threadListLimit OFFSET $requestRange;
 EOF;
 	$ret = $db->query($sql);
 	while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
-			if ($threadDisplayCount > $threadListLimit){
-				$countReached = true;
-				break;
-			}
-			$threadDisplayCount = $threadDisplayCount + 1;
-			echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '" class="threadLink">' . $row['TITLE'] . '</a></td><td>By: ' . $row['AUTHOR'] . '</td></tr>';
+		echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
+		$lastID = $row['ID'];
 	}
-	if ($countReached){
-		$requestRange = $requestRange + $threadListLimit;
-		echo '<div class="tabButton"><a href="index.php?range=' . $requestRange . '"><button>Next</button></a></div>';
-		$requestRange = $requestRange - $threadListLimit;
-		if ($requestRange < 1){
-			$requestRange = 1;
-		}
+	echo '</table>';
+
+	if ($requestRange > 0){
+			echo '<a href="index.php?range=' . ($requestRange - $threadListLimit) . '"><button>Back</button></a>';
 	}
-	if ($requestRange > 1){
-		$requestRange = $requestRange - $threadListLimit;
-		if ($requestRange < 1){
-			$requestRange = 1;
-		}
-		echo '<div class="tabButton"><a href="index.php?range=' . $requestRange . '"><button>Back</button></a></div>';
-		$requestRange = $requestRange + $threadListLimit;
+	if (intval($lastID) != 1){
+		echo '<br><br><a href="index.php?range=' . ($requestRange + $threadListLimit) . '"><button>Next</button></a>';
 	}
 
-		$db->close();
-		?>
-		</table>
+	$db->close();
+?>
 	</div>
 	<?php
 	$error = '';
@@ -111,8 +102,7 @@ EOF;
 			<input type='hidden' name='CSRF' value='<?php echo $CSRF;?>'>
 			<br>
 			<?php
-			if ($captcha)
-			{
+			if ($captcha) {
 				if (! isset($_SESSION['currentPosts']))
 				{
 					$_SESSION['currentPosts'] = $postsBeforeCaptcha;
