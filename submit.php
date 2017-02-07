@@ -13,7 +13,7 @@ include('php/sqlite.php');
 
 $Parsedown = new Parsedown();
 
-function tripcode($tripcode)
+function tripcode($tripcode, $salt)
 {
 	if ($tripcode == '')
 	{
@@ -94,6 +94,8 @@ $title = str_replace('#', '', $title);
 $title = str_replace('&', '', $title);
 $title = str_replace('"', '', $title);
 $title = str_replace('\'', '', $title);
+$title = str_replace('>', '', $title);
+$title = str_replace('<', '', $title);
 
 if (strstr($title, '.')){
 	if ($title[0] != "."){
@@ -146,7 +148,7 @@ $postFile = 'posts/' . $title . '.html';
 $postID = time();
 
 $doctype = '<!DOCTYPE HTML>';
-$compiled =  $doctype . '<div class="title">' . $title . '</div><div class="name">' . $name . '</div>' . tripcode($tripcode) . ' <div class="postID" id="OP" onClick="javascript: clickItem(\'OP\');">' . $postID . '</div> <div class="post" id="post">' . $text . '</div><span id="' . $postID . '"></span>';
+$compiled =  $doctype . '<div class="title">' . $title . '</div><div class="name">' . $name . '</div>' . tripcode($tripcode, $salt) . ' <div class="postID" id="OP" onClick="javascript: clickItem(\'OP\');">' . $postID . '</div> <div class="post" id="post">' . $text . '</div><span id="' . $postID . '"></span>';
 
 
 file_put_contents($postFile, $compiled, LOCK_EX);
