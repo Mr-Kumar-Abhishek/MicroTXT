@@ -46,6 +46,8 @@ You can use the demo board [on my website](https://chaoswebs.net/mt/).
 
 I will accept pull requests if they fix bugs or improve the software in a way I think fits the goals of the project.
 
+Try to follow the coding style of existing code, and comment any non-simple code.
+
 ### Bug Reports
 
 Well structured & polite bug reports are appreciated. Please try to include the following information in any bug reports:
