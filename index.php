@@ -25,6 +25,11 @@ include('php/sqlite.php');
 		<h3>Threads:</h3><br>
 		<table><tr><th>Title</th><th>Author</th></tr>
 		<?php
+		function startsWith($haystack, $needle){
+	     $length = strlen($needle);
+	     return (substr($haystack, 0, $length) === $needle);
+		 }
+
 		$max = 0; // Largest thread number in database
 		$threadDisplayCount = 1;
 		$countReached = false;
@@ -58,8 +63,10 @@ if ($ret == false){
 EOF;
 	$ret = $db->query($sql);
 	while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
-		echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
-		$lastID = $row['ID'];
+		if (startsWith($row['TITLE'], '.') == false){
+			echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
+			$lastID = $row['ID'];
+		}
 	}
 	echo '</table>';
 
