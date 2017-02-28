@@ -20,6 +20,7 @@ MicroTXT is only tested in a Linux environment, however, it should work on Windo
 Simply download and place the files in your PHP 5+ enabled website directory, and edit php/settings.php to your liking. You should probably also change rules.txt and faq.txt too.
 
 **You also need the GD PHP library installed on your PHP instance if you want to use the included captcha**
+
 **You also need Sqlite3 installed!**
 
 ## Configuring
