@@ -178,3 +178,7 @@ img
 .authors{
 	margin-left: 5em;
 }
+
+table, th, td {
+	padding: 10px;
+}
