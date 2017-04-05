@@ -66,7 +66,11 @@ if ($captcha)
 
 $replyTo = $_POST['replyTo'];
 
-if ($replyTo == '' || is_int($replyTo) == false)
+if (! is_numeric($replyTo)){
+	redirectError('No reply ID set');
+}
+
+if ($replyTo == '')
 {
 	redirectError('No reply ID set');
 }
