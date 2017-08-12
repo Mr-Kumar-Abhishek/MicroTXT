@@ -7,12 +7,12 @@ MIT License
 */
 session_start();
 
-$mtVersion = '1.5';
+$mtVersion = '1.6';
 
 /* BEGIN USER SET VARIABLES, MODIFING THIS PART IS SUPPORTED */
 
-$siteTitle = 'My MicroTXT Instance';
-$motd = false;
+$siteTitle = 'MicroTXT Demo';
+$motd = true;
 
 $captcha = true;
 $postsBeforeCaptcha = 3;
@@ -21,7 +21,7 @@ $reporting = false;
 
 $allowHidden = true; // If you change this to false and there are already hidden posts, they won't be deleted
 
-$salt = 'DEFAULT SALT'; // IT IS VERY IMPORTANT FOR YOU TO UPDATE THIS TO SOMETHING LONG AND RANDOM
+$salt = 'DEFAULT_SALT'; // IT IS VERY IMPORTANT FOR YOU TO UPDATE THIS TO SOMETHING LONG AND RANDOM
 
 $threadListLimit = 10;
 

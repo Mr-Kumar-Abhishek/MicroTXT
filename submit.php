@@ -85,6 +85,17 @@ if (strlen($_POST['text']) > 100000 || strlen($_POST['title'] > 20) || strlen($_
 
 // html encode user data to prevent xss
 $text = htmlentities($text);
+
+if (stripos($text, 'javascript:') !== false){
+	redirectError('Contains illegal string, javascript link.');
+}
+if (stripos($text, 'data:') !== false){
+	redirectError('Contains illegal string, data link.');
+}
+if (stripos($text, 'blob:') !== false){
+	redirectError('Contains illegal string, blob link.');
+}
+
 $text = $Parsedown->text($text);
 
 $title = str_replace('\\', '', $title);
