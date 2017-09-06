@@ -20,7 +20,37 @@ include('php/sqlite.php');
 </head>
 <body>
 	<h1 class='center logo'><?php echo $siteTitle;?></h1>
-
+  <div class='center'>
+    <form method='get'>
+      <label>Search for a thread: <input type='text' name='search' required placeholder='by author or title'> </label>
+      <input type='submit' value='search'>
+    </form>
+  </div>
+  <div id='searchResults'>
+    <table>
+      <tr><th>Title</th><th>Author</th></tr>
+  <?php
+  if (isset($_GET['search'])){
+    if ($_GET['search'] != ''){
+      $search = $_GET['search'];
+      $db = new SQLite3('php/threadList.db');
+      $search = $db->escapeString($search);
+      echo '<h2>Search results for "' . htmlentities($search) . '"</h2>';
+      $ret = $db->query("SELECT * FROM Threads WHERE Title LIKE '%$search%' or Author LIKE '%$search%'");
+      if (! $ret->fetchArray(SQLITE3_ASSOC)){
+        echo 'Sorry, there were no records found for that.';
+      }
+      else{
+        while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
+          //echo htmlentities($row['TITLE'] . ' - ' . $row['AUTHOR']) . '<br><br>';
+          echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
+        }
+      }
+    }
+  }
+  ?>
+</table>
+  </div>
 	<div id='postList'>
 		<h3>Threads:</h3><br>
 		<table><tr><th>Title</th><th>Author</th></tr>
