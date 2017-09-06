@@ -8,6 +8,10 @@ MIT License
 include('php/settings.php');
 include('php/csrf.php');
 include('php/sqlite.php');
+function startsWith($haystack, $needle){
+   $length = strlen($needle);
+   return (substr($haystack, 0, $length) === $needle);
+ }
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -26,12 +30,10 @@ include('php/sqlite.php');
       <input type='submit' value='search'>
     </form>
   </div>
-  <div id='searchResults'>
-    <table>
-      <tr><th>Title</th><th>Author</th></tr>
   <?php
   if (isset($_GET['search'])){
     if ($_GET['search'] != ''){
+      echo "<div id='searchResults'>";
       $search = $_GET['search'];
       $db = new SQLite3('php/threadList.db');
       $search = $db->escapeString($search);
@@ -41,24 +43,23 @@ include('php/sqlite.php');
         echo 'Sorry, there were no records found for that.';
       }
       else{
+        echo "<table><tr><th>Title</th><th>Author</th></tr>";
         while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
-          //echo htmlentities($row['TITLE'] . ' - ' . $row['AUTHOR']) . '<br><br>';
-          echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
+          if (! startsWith($row['TITLE'], '.')){
+            echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
+          }
         }
+        echo "</table>";
       }
+      echo "</div>";
     }
   }
   ?>
-</table>
-  </div>
 	<div id='postList'>
 		<h3>Threads:</h3><br>
 		<table><tr><th>Title</th><th>Author</th></tr>
 		<?php
-		function startsWith($haystack, $needle){
-	     $length = strlen($needle);
-	     return (substr($haystack, 0, $length) === $needle);
-		 }
+
 
 		$max = 0; // Largest thread number in database
 		$threadDisplayCount = 1;
