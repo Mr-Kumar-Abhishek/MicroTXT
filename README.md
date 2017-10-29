@@ -47,7 +47,7 @@ Tripcodes are 'secure enough' if you set a good salt and good passwords are used
 
 ## Demo
 
-You can use the demo board [on my website](https://chaoswebs.net/mt/).
+You can use the demo board [on my website](https://www.chaoswebs.net/mt/).
 
 ## Contributing
 
