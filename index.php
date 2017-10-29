@@ -12,6 +12,23 @@ function startsWith($haystack, $needle){
    $length = strlen($needle);
    return (substr($haystack, 0, $length) === $needle);
  }
+
+function installError($msg){
+	die('The PHP library "' . htmlentities($msg) . '" is not installed or is not enabled.<br>You need the libraries sqlite3, mbstring, and if you want captchas, GD.');
+}
+
+if (! extension_loaded('mbstring')) {
+	installError('mbstring');
+}
+if (! extension_loaded('sqlite3')) {
+	installError('sqlite3');
+}
+if (! extension_loaded('sqlite3')) {
+	installError('sqlite3');
+}
+if(! extension_loaded('gd') and $postsBeforeCaptcha > 0){
+	die('Since you have captchas enabled, you need the PHP gd library. Install/enable GD or disable captchas.');
+}
 ?>
 <!DOCTYPE HTML>
 <html>
