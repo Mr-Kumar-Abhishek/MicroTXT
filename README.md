@@ -19,11 +19,11 @@ MicroTXT is only tested in a Linux environment, however, it should work on Windo
 
 Simply download and place the files in your PHP 5+ enabled website directory, and edit php/settings.php to your liking. You should probably also change rules.txt and faq.txt too.
 
-**PHP 5 support will be dropped when PHP 5.6 reaches EOL, I suggest migrating to PHP 7.x before then.**
+**PHP 5.X support will be dropped when PHP 5.6 reaches EOL, I suggest migrating to PHP 7.x before then.**
+
+**YOU NEED PHP MBSTRING AND SQLITE3 LIBRARIES INSTALLED**
 
 **You also need the GD PHP library installed on your PHP instance if you want to use the included captcha**
-
-**You also need Sqlite3 installed!**
 
 ## Configuring
 
@@ -39,9 +39,11 @@ Don't rely on it for huge communities, it doesn't scale for very high traffic pr
 
 Change the salt in settings.php, otherwise tripcodes may be easier to brute force.
 
-**Prior to version 1.2, salts were not being applied to tripcodes, resulting in potentially easy to brute force tripcodes when bad passwords were used**
+**Prior to version 1.2, salts were not being applied to tripcodes (due to a bug), resulting in potentially easy to brute force tripcodes when bad passwords were used**
 
 **Prior to version 1.6, links in parent posts could potentially cause XSS with javascript: and data uris (reported by @arinerron)**
+
+Tripcodes are 'secure enough' if you set a good salt and good passwords are used for the codes, but in general they should not be considered to be 100% proof of a poster's identity.
 
 ## Demo
 
@@ -70,6 +72,7 @@ Well structured & polite bug reports are appreciated. Please try to include the 
 * Admin panel for setup, configuration, and moderation
 * Easy to use installation script (For Linux)
 * Perhaps a Docker container if there is demand
+* Code refactoring
 
 ## Contacting me
 
@@ -77,7 +80,7 @@ You can get in touch with me [here](https://chaoswebs.net/contact)
 
 ## Donate 💲
 
-If you want to support development, a dollar or two would be appreciated.
+If you want to support development, a dollar or two would be appreciated. If you donate, get in touch with me so I know what work you would like me to do for the project.
 
 Bitcoin: 3GKzFQyfE35U6Gi9XeN3xGQ3tMZy3x2ByQ
 
