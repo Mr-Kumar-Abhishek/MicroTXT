@@ -97,34 +97,34 @@ EOF;
 $ret = $db->query($sql);
 
 if ($ret == false){
-	echo '<p style="color: red;">No posts!</p>';
+	echo '</table><p style="color: red;">No posts!</p>';
 }
-
+else{
    while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
 		 $max = $row['MAX(ID)'];
 	 }
 
 	 // Get all threads within the specified range
 
-	 $sql =<<<EOF
-	   SELECT * FROM Threads ORDER BY ROWID DESC LIMIT $threadListLimit OFFSET $requestRange;
+  	 $sql =<<<EOF
+  	   SELECT * FROM Threads ORDER BY ROWID DESC LIMIT $threadListLimit OFFSET $requestRange;
 EOF;
-	$ret = $db->query($sql);
-	while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
-		if (startsWith($row['TITLE'], '.') == false){
-			echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
-			$lastID = $row['ID'];
-		}
-	}
-	echo '</table>';
+  	$ret = $db->query($sql);
+  	while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
+  		if (startsWith($row['TITLE'], '.') == false){
+  			echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
+  			$lastID = $row['ID'];
+  		}
+  	}
+  	echo '</table>';
 
-	if ($requestRange > 0){
-			echo '<a href="index.php?range=' . ($requestRange - $threadListLimit) . '"><button>Back</button></a>';
-	}
-	if (intval($lastID) != 1){
-		echo '<br><br><a href="index.php?range=' . ($requestRange + $threadListLimit) . '"><button>Next</button></a>';
-	}
-
+  	if ($requestRange > 0){
+  			echo '<a href="index.php?range=' . ($requestRange - $threadListLimit) . '"><button>Back</button></a>';
+  	}
+  	if (intval($lastID) != 1){
+  		echo '<br><br><a href="index.php?range=' . ($requestRange + $threadListLimit) . '"><button>Next</button></a>';
+  	}
+}
 	$db->close();
 ?>
 	</div>
