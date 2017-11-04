@@ -8,8 +8,7 @@ MIT License
 include('php/settings.php');
 include('php/csrf.php');
 
-function tripcode($tripcode)
-{
+function tripcode($tripcode) {
 	if ($tripcode == '')
 	{
 		return '';
@@ -22,11 +21,18 @@ function tripcode($tripcode)
 
 
 // Redirect if some BS is going on
-function redirectError($msg)
-{
+function redirectError($msg) {
+
+  $domain = $_SERVER['HTTP_HOST'];
+
+  $path = $_SERVER['SCRIPT_NAME'];
+
+  $queryString = $_SERVER['QUERY_STRING'];
+
+  $url = "http://" . $domain . $path . "?" . $queryString;
 	$_SESSION['mtPostError'] = true;
 	$_SESSION['mtPostErrorTxt'] = $msg;
-	header('location: index.php');
+	header('location: ' . $url);
 	die(0);
 }
 
@@ -95,9 +101,11 @@ $tripcode = $_POST['tripcode'];
 $text = htmlentities($text);
 $name = htmlentities($name);
 $tripcode = htmlentities($tripcode);
-if (strlen($_POST['text']) > 100000 || strlen($_POST['name'] > 20) || strlen($_POST['tripcode']) > 100)
-{
+if (strlen($_POST['text']) > 100000 || strlen($_POST['name'] > 20) || strlen($_POST['tripcode']) > 100) {
 	redirectError('Text, name, or tripcode is too long.');
+}
+elseif (strlen($_POST['text']) == 0){
+  redirectError('Reply text cannot be blank');
 }
 
 
@@ -148,6 +156,7 @@ $parent->appendChild( $child);
 
 $child = $doc->createElement('div', $text);
 $child->setAttribute( 'class', 'post');
+$child->setAttribute( 'id', 'cont-' . $postID);
 
 $parent->appendChild( $child);
 
@@ -159,7 +168,7 @@ $parent->appendChild( $child);
 
 // Write html to thread file
 
-file_put_contents($threadFile, nl2br($doc->saveHTML(), $false));
+file_put_contents($threadFile, nl2br($doc->saveHTML(), false));
 
 // If captcha is to be used, increment the user session post count
 if ($captcha)

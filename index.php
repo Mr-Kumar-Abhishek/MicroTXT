@@ -55,13 +55,13 @@ if(! extension_loaded('gd') and $postsBeforeCaptcha > 0){
       $db = new SQLite3('php/threadList.db');
       $search = $db->escapeString($search);
       echo '<h2>Search results for "' . htmlentities($search) . '"</h2>';
-      $ret = $db->query("SELECT * FROM Threads WHERE Title LIKE '%$search%' or Author LIKE '%$search%'");
+      $ret = $db->query("SELECT * FROM Threads WHERE Title LIKE '%$search%' or Author LIKE '%search%'");
       if (! $ret->fetchArray(SQLITE3_ASSOC)){
         echo 'Sorry, there were no records found for that.';
       }
       else{
         echo "<table><tr><th>Title</th><th>Author</th></tr>";
-        while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
+        while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
           if (! startsWith($row['TITLE'], '.')){
             echo '<tr><td><a href="view.php?post=' . $row['TITLE'] . '">' . $row['TITLE'] . '</a></td><td>' . $row['AUTHOR'] . '</td></tr>';
           }

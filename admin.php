@@ -135,6 +135,7 @@ EOF;
     echo '<input type="hidden" id="CSRF" value="' . $_SESSION['CSRF'] . '">';
     echo '<noscript><h1 style="color: red;">JS is required, sorry</h1></noscript>';
     echo '<script src="admin.js"></script>';
+    echo '<p>To delete a reply in a thread, be logged in on this page and visit the thread. A form to delete replys by ID should be present.';
     echo '<h2 class="center">Delete a thread</h2>';
     echo '<div class="center">';
     foreach (glob('posts/'. '{,.}*.html', GLOB_BRACE)  as $filename) {
