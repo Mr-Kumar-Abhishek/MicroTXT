@@ -28,11 +28,9 @@ function redirectError($msg) {
   $path = $_SERVER['SCRIPT_NAME'];
 
   $queryString = $_SERVER['QUERY_STRING'];
-
-  $url = "http://" . $domain . $path . "?" . $queryString;
 	$_SESSION['mtPostError'] = true;
 	$_SESSION['mtPostErrorTxt'] = $msg;
-	header('location: ' . $url);
+	header('location: index.php');
 	die(0);
 }
 
