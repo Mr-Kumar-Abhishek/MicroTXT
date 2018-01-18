@@ -82,6 +82,6 @@ You can get in touch with me [here](https://chaoswebs.net/contact)
 
 If you want to support development, a dollar or two would be appreciated. If you donate, get in touch with me so I know what work you would like me to do for the project.
 
-Bitcoin: 1SnowUzFYipK1MD1ME6sVTYhQ8M3c9ocH
+Bitcoin/BCH: 1Hek4bVGsxSFA1QpTXryMZcP88agGMKfAU
 
 [Or, donate another way](https://chaoswebs.net/)
