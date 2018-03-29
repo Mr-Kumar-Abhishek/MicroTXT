@@ -44,7 +44,7 @@ if ($_POST['CSRF'] != $_SESSION['CSRF'])
 	redirectError('Invalid CSRF token');
 }
 
-
+/*
 if ($captcha)
 {
 	if (! isset($_SESSION['currentPosts']))
@@ -67,7 +67,7 @@ if ($captcha)
 		}
 	}
 }
-
+*/
 $replyTo = $_POST['replyTo'];
 
 if (! is_numeric($replyTo)){

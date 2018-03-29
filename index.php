@@ -26,9 +26,11 @@ if (! extension_loaded('sqlite3')) {
 if (! extension_loaded('sqlite3')) {
 	installError('sqlite3');
 }
+/*
 if(! extension_loaded('gd') and $postsBeforeCaptcha > 0){
 	die('Since you have captchas enabled, you need the PHP gd library. Install/enable GD or disable captchas.');
 }
+*/
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -157,6 +159,7 @@ EOF;
 			<input type='hidden' name='CSRF' value='<?php echo $CSRF;?>'>
 			<br>
 			<?php
+			/*
 			if ($captcha) {
 				if (! isset($_SESSION['currentPosts']))
 				{
@@ -167,7 +170,7 @@ EOF;
 					echo '<img src="php/captcha.php" alt="captcha">';
 					echo '<br><br><label>Captcha Text: <input required type="text" name="captcha" maxlength="10"></label><br><br>';
 				}
-			}
+			} */
 			?>
 			<input type='submit' value='Post' class='submitPostButton'>
 			<br>

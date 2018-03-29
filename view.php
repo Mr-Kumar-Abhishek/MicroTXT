@@ -86,7 +86,7 @@ else{
 		<input type='hidden' name='threadID' value='<?php echo $id;?>'>
 		<br>
 		<?php
-			if ($captcha)
+		/*	if ($captcha)
 			{
 				if (! isset($_SESSION['currentPosts']))
 				{
@@ -97,7 +97,7 @@ else{
 					echo '<img src="php/captcha.php" alt="captcha">';
 					echo '<br><br><label>Captcha Text: <input required type="text" name="captcha" maxlength="10"></label><br><br>';
 				}
-			}
+			} */
 		?>
 		<input type='submit' value='Reply'>
 	</form>
