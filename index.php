@@ -68,12 +68,14 @@ if(! extension_loaded('gd') and $postsBeforeCaptcha > 0){
 </head>
 <body>
 	<h1 class='center logo'><?php echo $siteTitle;?></h1>
+  <!--
   <div class='center'>
     <form method='get'>
       <label>Search for a thread: <input type='text' name='search' required placeholder='by author or title'> </label>
       <input type='submit' value='search'>
     </form>
   </div>
+  -->
   <?php
   if (isset($_GET['search'])){
     if ($_GET['search'] != ''){
